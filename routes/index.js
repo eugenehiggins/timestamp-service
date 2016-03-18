@@ -1,12 +1,20 @@
 var express = require('express');
+var moment = require('moment');
 var router = express.Router();
 
 var outputDate = function(date) {
-    var month = date.toLocaleString("en-us", { month: "long"});
-    var day = date.getDate();
-    var year = date.getFullYear()
 
-    return JSON.stringify({ "unix": date.getTime()/1000 , "natural": month +" "+ day +" "+ year })
+    if (moment(date).isValid()) {
+        var month = date.toLocaleString("en-us", {month: "long"});
+        var day = date.getDate();
+        var year = date.getFullYear();
+
+        return JSON.stringify({ "unix": date.getTime()/1000 , "natural": month +" "+ day +" "+ year })
+    } else {
+        return JSON.stringify({ "unix": null , "natural": null })
+    }
+
+
 }
 
 /* GET home page. */
